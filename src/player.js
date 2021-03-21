@@ -150,7 +150,7 @@ class Player {
 
     // 新しいぷよ画像を作成する
     this.centerPuyoElement = PuyoImage.getPuyo(this.centerPuyo);
-    this.movablePuyoElement = PuyoImage.getPuyo(this.movablePuyoElement);
+    this.movablePuyoElement = PuyoImage.getPuyo(this.movablePuyo);
     Stage.stageElement.appendChild(this.centerPuyoElement);
     Stage.stageElement.appendChild(this.movablePuyoElement);
 

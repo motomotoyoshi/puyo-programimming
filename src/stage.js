@@ -9,7 +9,7 @@ class Stage {
   // static puyoCount;
   // static fallingPuyoList = [];
   // static eraseStartFrame;
-  // static erasingPuyoInfolist = [];
+  // static erasingPuyoInfoList = [];
 
 
   static initialize(){
@@ -17,7 +17,7 @@ class Stage {
     const stageElement = document.getElementById("stage");
     stageElement.style.width = Config.puyoImgWidth * Config.stageCols + 'px';
     stageElement.style.height = Config.puyoImgHeight * Config.stageRows + 'px';
-    stageElement.style.backgroundColor = config.stageBackgroundColor;
+    stageElement.style.backgroundColor = Config.stageBackgroundColor;
     this.stageElement = stageElement;
 
     const zenkeshiImage = document.getElementById("zenkeshi");
@@ -28,7 +28,7 @@ class Stage {
     stageElement.appendChild(zenkeshiImage);
 
     const scoreElement = document.getElementById("score");
-    scoreElement.style.backgroundColor = config.scoreBackgroundColor;
+    scoreElement.style.backgroundColor = Config.scoreBackgroundColor;
     scoreElement.style.height = Config.puyoImgHeight * Config.stageRows + 'px';
     scoreElement.style.width = Config.puyoImgWidth * Config.stageCols + 'px';
     scoreElement.style.height = Config.fontHeight + 'px';
@@ -99,7 +99,7 @@ class Stage {
           let cell = this.board[y][x];
           this.board[y][x] = null;
           let dst = y;
-          while (dst + 1 < Config.stageRows && this.board[dst + 1][x] === null) {
+          while (dst + 1 < Config.stageRows && this.board[dst + 1][x] == null) {
            dst++; 
           }
           //最終目的地に置く
@@ -149,7 +149,7 @@ class Stage {
   //消せるかどうか判定
   static checkErase(startFrame){
     this.eraseStartFrame = startFrame;
-    this.erasingPuyoInfolist.length = 0;
+    this.erasingPuyoInfoList.length = 0;
 
     //何色のぷよを消したか記録
     const erasedPuyoColor = {};
@@ -198,7 +198,7 @@ class Stage {
         sequencePuyoInfoList.length = 0;
         const puyoColor = this.board[y][x] && this.board[y][x].puyo;
         checkSequentialPuyo(x, y);
-        if(sequencePuyoInfoList.length == 0 || sequencePuyoInfoList.length < Config.erasingPuyoCount){
+        if(sequencePuyoInfoList.length == 0 || sequencePuyoInfoList.length < Config.erasePuyoCount){
           //連続して並んでいる数が足りなかったので消さない
           if(sequencePuyoInfoList.length){
             //退避していたぷよを消さないリストに追加
@@ -206,22 +206,22 @@ class Stage {
           }
         } else {
           //これらは消していいので消すリストに追加する
-          this.erasingPuyoInfolist.push(...sequencePuyoInfoList);
+          this.erasingPuyoInfoList.push(...sequencePuyoInfoList);
           erasePuyoColor[puyoColor] = true;
         }
       }
     }
-    this.puyoCount -= this.erasingPuyoInfolist.length;
+    this.puyoCount -= this.erasingPuyoInfoList.length;
 
     //消さないリストに入っていたぷよをメモリに復帰
     for(const info of existingPuyoInfoList){
       this.board[info.y][info.x] = info.cell;
     }
 
-    if(this.erasingPuyoInfolist.length){
+    if(this.erasingPuyoInfoList.length){
       //もし消せるなら消えるぷよの数と色の情報をまとめて返す
       return {
-        piece: this.erasingPuyoInfolist.length,
+        piece: this.erasingPuyoInfoList.length,
         color: Object.keys(erasedPuyoColor).length
       };
     }
@@ -234,31 +234,31 @@ class Stage {
     const ratio = elapsedFrame / Config.eraseAnimationDuration;
     if(ratio > 1){
       //アニメーションを終了する
-      for(const info of this.erasingPuyoInfolist){
+      for(const info of this.erasingPuyoInfoList){
         var element = info.cell.element;
         this.stageElement.removeChild(element);
       }
       return false;
     } else if(ratio > 0.75){
-      for(const info of this.erasingPuyoInfolist){
+      for(const info of this.erasingPuyoInfoList){
         var element = info.cell.element;
         element.style.display = 'block';
       }
       return true;
     } else if(ratio > 0.50){
-      for(const info of this.erasingPuyoInfolist){
+      for(const info of this.erasingPuyoInfoList){
         var element = info.cell.element;
         element.style.display = 'none';
       }
       return true;
     } else if(ratio > 0.25){
-      for(const info of this.erasingPuyoInfolist){
+      for(const info of this.erasingPuyoInfoList){
         var element = info.cell.element;
         element.style.display = 'block';
       }
       return true;
     } else {
-      for(const info of this.erasingPuyoInfolist){
+      for(const info of this.erasingPuyoInfoList){
         var element = info.cell.element;
         element.style.display = 'none';
       }
@@ -301,4 +301,4 @@ class Stage {
   }
 }
 Stage.fallingPuyoList = [];
-Stage.erasingPuyoInfolist = [];
+Stage.erasingPuyoInfoList = [];
