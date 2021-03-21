@@ -60,7 +60,7 @@ function loop() {
       if(!Player.createNewPuyo()) {
         mode = 'gameOver';
       } else {
-        mode = 'player';
+        mode = 'playing';
       }
       break;
     case 'playing':
