@@ -2,21 +2,21 @@
 
 class Player {
 
-  static centerPuyo;
-  static movablePuyo;
-  static puyoStatus;
-  static centerPuyoElement;
-  static movablePuyoElement;
+  // static centerPuyo;
+  // static movablePuyo;
+  // static puyoStatus;
+  // static centerPuyoElement;
+  // static movablePuyoElement;
 
-  static groundFrame;
-  static ketStatus;
+  // static groundFrame;
+  // static ketStatus;
 
-  static actionStartFrame;
-  static moveSource;
-  static moceDestination;
-  static ratateBeforeLeft;
-  static ratateAfterLeft;
-  static ratateFromRotaion;
+  // static actionStartFrame;
+  // static moveSource;
+  // static moceDestination;
+  // static ratateBeforeLeft;
+  // static ratateAfterLeft;
+  // static ratateFromRotaion;
 
   static initialize() {
     this.ketStatus = {
